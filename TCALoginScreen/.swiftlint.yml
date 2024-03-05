@@ -1,0 +1,26 @@
+included:
+  - TCALoginScreen
+
+disabled_rules:
+  - trailing_whitespace
+  - function_body_length
+  - todo
+  - function_parameter_count
+  - type_body_length
+  - cyclomatic_complexity
+  - identifier_name
+  - nesting
+  - notification_center_detachment
+  - file_length
+  - large_tuple
+
+opt_in_rules:
+    - conditional_returns_on_newline
+    - shorthand_optional_binding
+    - implicit_return
+
+line_length: 250
+
+type_name:
+    max_length: 50
+

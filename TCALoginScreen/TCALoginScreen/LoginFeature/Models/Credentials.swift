@@ -5,8 +5,8 @@
 //  Created by Krzysztof Lema on 05/03/2024.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct Credentials: Equatable, Codable {
     var login: String = ""
