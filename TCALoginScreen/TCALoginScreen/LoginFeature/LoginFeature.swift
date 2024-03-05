@@ -14,7 +14,7 @@ struct LoginFeature: Reducer {
     enum Action: Equatable {}
     
     var body: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce { state, _ in
             switch state {
             default:
                 .none
@@ -29,10 +29,10 @@ struct LoginView: View {
     @State private var password: String = ""
     
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
-            Form{
+        WithViewStore(self.store, observe: { $0 }, content: { _ in
+            Form {
                 Section {
-                    VStack(alignment: .leading){
+                    VStack(alignment: .leading) {
                         Text("Hej!")
                             .font(.largeTitle)
                             .foregroundColor(.accentColor)
@@ -63,7 +63,7 @@ struct LoginView: View {
                         .padding()
                         .background(Color.gray.opacity(0.3))
                         .clipShape(RoundedRectangle(cornerRadius: 15.0, style: .circular))
-                      Spacer()
+                        Spacer()
                     }
                     HStack {
                         Spacer()
@@ -78,26 +78,26 @@ struct LoginView: View {
                         .padding()
                     HStack(content: {
                         Spacer()
-                        Button(action: {}) {
-                              Image(systemName: "magnifyingglass")
-                            }
-                            .padding()
-                            .background(.blue)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
+                        Button(action: {}, label: {
+                            Image(systemName: "magnifyingglass")
+                        })
+                        .padding()
+                        .background(.blue)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
                         
-                        Button(action: {}) {
-                              Image(systemName: "magnifyingglass")
-                            }
-                            .padding()
-                            .background(.black)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
+                        Button(action: {}, label: {
+                            Image(systemName: "magnifyingglass")
+                        })
+                        .padding()
+                        .background(.black)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
                         Spacer()
                     })
                 }
             }
-        }
+        })
     }
 }
 
