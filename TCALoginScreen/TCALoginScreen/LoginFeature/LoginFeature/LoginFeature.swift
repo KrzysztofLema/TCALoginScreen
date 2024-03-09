@@ -8,28 +8,26 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct LoginFeature: Reducer {
+@Reducer
+struct LoginFeature {
+    @ObservableState
     struct State: Equatable {
-        @PresentationState var resetPassword: ResetPasswordFeature.State?
-        @BindingState var credentials: Credentials
+        var credentials: Credentials = Credentials()
     }
     
-    enum Action: Equatable, BindableAction {
-        case binding(BindingAction<State>)
+    enum Action: Equatable {
         case createAccountButtonTapped
         case loginButtonTapped
         case facebookLoginButtonTapped
         case appleLoginButtonTapped
         case resetPasswordButtonTapped
-        case resetPassword(PresentationAction<ResetPasswordFeature.Action>)
+        case onLoginInputChange(String)
+        case onPasswordInputChange(String)
     }
     
     var body: some ReducerOf<Self> {
-        BindingReducer()
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
-            case .binding(_):
-                return .none
             case .createAccountButtonTapped:
                 print("create account button tapped")
                 return .none
@@ -43,23 +41,20 @@ struct LoginFeature: Reducer {
                 print("apple login button tapped")
                 return .none
             case .resetPasswordButtonTapped:
-                state.resetPassword = ResetPasswordFeature.State()
                 return .none
-            case .resetPassword:
+            case .onLoginInputChange:
+                return .none
+            case .onPasswordInputChange:
                 return .none
             }
-        }
-        .ifLet(\.$resetPassword, action: /Action.resetPassword) {
-            ResetPasswordFeature()
         }
     }
 }
 
 struct LoginView: View {
-    let store: StoreOf<LoginFeature>
+  @Bindable var store: StoreOf<LoginFeature>
     
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
             Form {
                 Section {
                     VStack(alignment: .leading) {
@@ -73,24 +68,24 @@ struct LoginView: View {
                     VStack(alignment: .leading) {
                         Text("Email")
                             .font(.caption)
-                        TextField("", text: viewStore.$credentials.login)
+                        TextField("", text: $store.credentials.login.sending(\.onLoginInputChange))
                         Spacer()
                         Text("Password")
                             .font(.caption)
-                        TextField("", text: viewStore.$credentials.password)
+                        TextField("", text: $store.credentials.password.sending(\.onPasswordInputChange))
                     }
                     HStack {
                         Spacer()
-                        Button("Reset Password") {
-                            viewStore.send(.resetPasswordButtonTapped)
-                        }.sheet(store: self.store.scope(state: \.$resetPassword, action: {.resetPassword($0)})) { store in
-                            ResetPasswordFeatureView(store: store)
+                        NavigationLink(state: AppLoginFeature.Path.State.resetPassword(ResetPasswordFeature.State())) {
+                            Button("Reset Password") {
+                                store.send(.resetPasswordButtonTapped)
+                            }
                         }
                     }
                     HStack(alignment: .center) {
                         Spacer()
                         Button("Log in") {
-                            viewStore.send(.loginButtonTapped)
+                            store.send(.loginButtonTapped)
                         }
                         .padding()
                         .background(Color.gray.opacity(0.3))
@@ -101,7 +96,7 @@ struct LoginView: View {
                         Spacer()
                         Text("This is your first time:")
                         Button("Create Account") {
-                            viewStore.send(.createAccountButtonTapped)
+                            store.send(.createAccountButtonTapped)
                         }
                         Spacer()
                     }
@@ -111,7 +106,7 @@ struct LoginView: View {
                     HStack(content: {
                         Spacer()
                         Button(action: {
-                            viewStore.send(.facebookLoginButtonTapped)
+                            store.send(.facebookLoginButtonTapped)
                         }, label: {
                             Image(systemName: "magnifyingglass")
                         })
@@ -122,7 +117,7 @@ struct LoginView: View {
                         .buttonStyle(.borderless)
                       
                         Button(action: {
-                            viewStore.send(.appleLoginButtonTapped)
+                            store.send(.appleLoginButtonTapped)
                         }, label: {
                             Image(systemName: "magnifyingglass")
                         })
@@ -135,12 +130,11 @@ struct LoginView: View {
                     })
                 }
             }
-        })
-    }
+        }
 }
 
 #Preview {
-    LoginView(store: Store(initialState: LoginFeature.State(credentials: Credentials()), reducer: {
+    LoginView(store: Store(initialState: LoginFeature.State(), reducer: {
         LoginFeature()
     }))
 }

@@ -13,7 +13,8 @@
 		9523E53D2B58596F00CBB7D9 /* TCALoginScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9523E53C2B58596F00CBB7D9 /* TCALoginScreenTests.swift */; };
 		9523E5472B58596F00CBB7D9 /* TCALoginScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9523E5462B58596F00CBB7D9 /* TCALoginScreenUITests.swift */; };
 		9523E5492B58596F00CBB7D9 /* TCALoginScreenUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9523E5482B58596F00CBB7D9 /* TCALoginScreenUITestsLaunchTests.swift */; };
-		9523E5572B5859AD00CBB7D9 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 9523E5562B5859AD00CBB7D9 /* ComposableArchitecture */; };
+		956885352B9994D700730D64 /* AppLoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 956885342B9994D700730D64 /* AppLoginFeature.swift */; };
+		956885382B9996A000730D64 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 956885372B9996A000730D64 /* ComposableArchitecture */; };
 		957867872B990D0B00762556 /* ResetPasswordFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957867812B990D0B00762556 /* ResetPasswordFeature.swift */; };
 		957867892B990D0B00762556 /* LoginFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957867842B990D0B00762556 /* LoginFeature.swift */; };
 		9582FD0E2B97D5E3001608DF /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582FD0C2B97D5E3001608DF /* Credentials.swift */; };
@@ -46,6 +47,7 @@
 		9523E5422B58596F00CBB7D9 /* TCALoginScreenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TCALoginScreenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9523E5462B58596F00CBB7D9 /* TCALoginScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCALoginScreenUITests.swift; sourceTree = "<group>"; };
 		9523E5482B58596F00CBB7D9 /* TCALoginScreenUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCALoginScreenUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		956885342B9994D700730D64 /* AppLoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoginFeature.swift; sourceTree = "<group>"; };
 		957867812B990D0B00762556 /* ResetPasswordFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordFeature.swift; sourceTree = "<group>"; };
 		957867842B990D0B00762556 /* LoginFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginFeature.swift; sourceTree = "<group>"; };
 		9582FD0C2B97D5E3001608DF /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
@@ -56,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9523E5572B5859AD00CBB7D9 /* ComposableArchitecture in Frameworks */,
+				956885382B9996A000730D64 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +157,7 @@
 				957867832B990D0B00762556 /* LoginFeature */,
 				957867802B990D0B00762556 /* ResetPasswordFeature */,
 				9582FD0B2B97D5E3001608DF /* Models */,
+				956885342B9994D700730D64 /* AppLoginFeature.swift */,
 			);
 			path = LoginFeature;
 			sourceTree = "<group>";
@@ -185,7 +188,7 @@
 			);
 			name = TCALoginScreen;
 			packageProductDependencies = (
-				9523E5562B5859AD00CBB7D9 /* ComposableArchitecture */,
+				956885372B9996A000730D64 /* ComposableArchitecture */,
 			);
 			productName = TCALoginScreen;
 			productReference = 9523E5282B58596E00CBB7D9 /* TCALoginScreen.app */;
@@ -260,7 +263,7 @@
 			);
 			mainGroup = 9523E51F2B58596E00CBB7D9;
 			packageReferences = (
-				9523E5552B5859AD00CBB7D9 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				956885362B9996A000730D64 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 9523E5292B58596E00CBB7D9 /* Products */;
 			projectDirPath = "";
@@ -324,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				956885352B9994D700730D64 /* AppLoginFeature.swift in Sources */,
 				9582FD0E2B97D5E3001608DF /* Credentials.swift in Sources */,
 				9523E52C2B58596E00CBB7D9 /* TCALoginScreenApp.swift in Sources */,
 				957867892B990D0B00762556 /* LoginFeature.swift in Sources */,
@@ -661,20 +665,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9523E5552B5859AD00CBB7D9 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		956885362B9996A000730D64 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.6.0;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9523E5562B5859AD00CBB7D9 /* ComposableArchitecture */ = {
+		956885372B9996A000730D64 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9523E5552B5859AD00CBB7D9 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = 956885362B9996A000730D64 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
