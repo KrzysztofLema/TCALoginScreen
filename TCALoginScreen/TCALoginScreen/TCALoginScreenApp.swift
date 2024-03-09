@@ -12,9 +12,17 @@ import SwiftUI
 struct TCALoginScreenApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView(store: Store(initialState: LoginFeature.State(), reducer: {
-                LoginFeature()
-            }))
+            AppLoginRootView(
+                store: Store(
+                    initialState: AppLoginFeature.State(
+                        path: StackState([.resetPassword(ResetPasswordFeature.State())]),
+                        login: LoginFeature.State()),
+                    reducer: {
+                        AppLoginFeature()
+                            ._printChanges()
+                    }
+                )
+            )
         }
     }
 }

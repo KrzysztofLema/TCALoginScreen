@@ -8,28 +8,53 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct LoginFeature: Reducer {
-    struct State: Equatable {}
+@Reducer
+struct LoginFeature {
+    @ObservableState
+    struct State: Equatable {
+        var credentials: Credentials = Credentials()
+    }
     
-    enum Action: Equatable {}
+    enum Action: Equatable {
+        case createAccountButtonTapped
+        case loginButtonTapped
+        case facebookLoginButtonTapped
+        case appleLoginButtonTapped
+        case resetPasswordButtonTapped
+        case onLoginInputChange(String)
+        case onPasswordInputChange(String)
+    }
     
     var body: some ReducerOf<Self> {
-        Reduce { state, _ in
-            switch state {
-            default:
-                .none
+        Reduce { _, action in
+            switch action {
+            case .createAccountButtonTapped:
+                print("create account button tapped")
+                return .none
+            case .loginButtonTapped:
+                print("login button tapped")
+                return .none
+            case .facebookLoginButtonTapped:
+                print("faceBook login Button tapped")
+                return .none
+            case .appleLoginButtonTapped:
+                print("apple login button tapped")
+                return .none
+            case .resetPasswordButtonTapped:
+                return .none
+            case .onLoginInputChange:
+                return .none
+            case .onPasswordInputChange:
+                return .none
             }
         }
     }
 }
 
 struct LoginView: View {
-    let store: StoreOf<LoginFeature>
-    @State private var login: String = ""
-    @State private var password: String = ""
+  @Bindable var store: StoreOf<LoginFeature>
     
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { _ in
             Form {
                 Section {
                     VStack(alignment: .leading) {
@@ -43,22 +68,24 @@ struct LoginView: View {
                     VStack(alignment: .leading) {
                         Text("Email")
                             .font(.caption)
-                        TextField("", text: $login)
+                        TextField("", text: $store.credentials.login.sending(\.onLoginInputChange))
                         Spacer()
                         Text("Password")
                             .font(.caption)
-                        TextField("", text: $password)
+                        TextField("", text: $store.credentials.password.sending(\.onPasswordInputChange))
                     }
                     HStack {
                         Spacer()
-                        Button("Reset Password") {
-                            
+                        NavigationLink(state: AppLoginFeature.Path.State.resetPassword(ResetPasswordFeature.State())) {
+                            Button("Reset Password") {
+                                store.send(.resetPasswordButtonTapped)
+                            }
                         }
                     }
                     HStack(alignment: .center) {
                         Spacer()
                         Button("Log in") {
-                            
+                            store.send(.loginButtonTapped)
                         }
                         .padding()
                         .background(Color.gray.opacity(0.3))
@@ -69,7 +96,7 @@ struct LoginView: View {
                         Spacer()
                         Text("This is your first time:")
                         Button("Create Account") {
-                            
+                            store.send(.createAccountButtonTapped)
                         }
                         Spacer()
                     }
@@ -78,27 +105,32 @@ struct LoginView: View {
                         .padding()
                     HStack(content: {
                         Spacer()
-                        Button(action: {}, label: {
+                        Button(action: {
+                            store.send(.facebookLoginButtonTapped)
+                        }, label: {
                             Image(systemName: "magnifyingglass")
                         })
                         .padding()
                         .background(.blue)
                         .foregroundColor(.white)
-                        .clipShape(Circle())
-                        
-                        Button(action: {}, label: {
+                        .clipShape(.circle)
+                        .buttonStyle(.borderless)
+                      
+                        Button(action: {
+                            store.send(.appleLoginButtonTapped)
+                        }, label: {
                             Image(systemName: "magnifyingglass")
                         })
                         .padding()
                         .background(.black)
                         .foregroundColor(.white)
-                        .clipShape(Circle())
+                        .clipShape(.circle)
+                        .buttonStyle(.borderless)
                         Spacer()
                     })
                 }
             }
-        })
-    }
+        }
 }
 
 #Preview {
